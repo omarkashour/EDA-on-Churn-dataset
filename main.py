@@ -20,7 +20,7 @@ plt.show()
 # Define age groups
 bins = [0, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 labels = ['0-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100']
-df['AgeGroup'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
+df['Age Group'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
 
 # Histogram for each age group
 sns.histplot(data=df, x='Age Group', hue='Churn', multiple='stack')
