@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -81,9 +82,13 @@ def charge_amount_statistics(df):
 
 def plot_correlation_matrix(df):
     # One-hot encode categorical variables
-    encoded_df = pd.get_dummies(df, drop_first=True)
+    encoded_df = pd.get_dummies(df)
     # Now compute correlation
     corr_matrix = encoded_df.corr()
+
+    # Create a mask for the upper triangle, but keep the diagonal
+    # mask = np.triu(np.ones_like(corr_matrix, dtype=bool), k=1)
+
     plt.figure(figsize=(17, 15))
     sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
     plt.title('Correlation Matrix (All Attributes)')
