@@ -7,9 +7,12 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score, roc_curve
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-url = './Customer Churn.csv'
-data = pd.read_csv(url)  # Replace with the path to your dataset
+# Load the dataset
+url = './Customer Churn.csv'  # Replace with the path to your dataset
+data = pd.read_csv(url)  # Load data
+
 # Preprocess the data
 X = data.drop(columns=['ID', 'Churn'])  # Features (exclude ID and Churn)
 y = data['Churn'].map({'yes': 1, 'no': 0})  # Target variable (convert 'yes'/'no' to 1/0)
@@ -65,22 +68,25 @@ accuracy_lr = accuracy_score(y_test, y_pred_lr)
 conf_matrix_lr = confusion_matrix(y_test, y_pred_lr)
 roc_auc_lr = roc_auc_score(y_test, lr.predict_proba(X_test)[:, 1])
 
-# Displaying the results
-print(f"Accuracy of k-NN: {accuracy_knn}")
-print(f"Confusion Matrix for k-NN:\n{conf_matrix_knn}")
-print(f"ROC AUC for k-NN: {roc_auc_knn}\n")
+# Create a summary table for model results
+results_summary = {
+    'Model': ['k-NN', 'Naive Bayes', 'Decision Tree', 'Logistic Regression'],
+    'Accuracy': [accuracy_knn, accuracy_nb, accuracy_dt, accuracy_lr],
+    'ROC AUC': [roc_auc_knn, roc_auc_nb, roc_auc_dt, roc_auc_lr],
+}
 
-print(f"Accuracy of Naive Bayes: {accuracy_nb}")
-print(f"Confusion Matrix for Naive Bayes:\n{conf_matrix_nb}")
-print(f"ROC AUC for Naive Bayes: {roc_auc_nb}\n")
+# Create a DataFrame from the results
+results_df = pd.DataFrame(results_summary)
 
-print(f"Accuracy of Decision Tree: {accuracy_dt}")
-print(f"Confusion Matrix for Decision Tree:\n{conf_matrix_dt}")
-print(f"ROC AUC for Decision Tree: {roc_auc_dt}\n")
+# Display the table in a clean format
+plt.figure(figsize=(8, 4))
+sns.heatmap(results_df.set_index('Model').T, annot=True, fmt='.4f', cmap="Blues", cbar=False, linewidths=0.5)
+plt.title('Model Performance Comparison')
+plt.yticks(rotation=0)  # Rotate row labels to make them horizontal
+plt.show()
 
-print(f"Accuracy of Logistic Regression: {accuracy_lr}")
-print(f"Confusion Matrix for Logistic Regression:\n{conf_matrix_lr}")
-print(f"ROC AUC for Logistic Regression: {roc_auc_lr}\n")
+# Optionally, you can print the raw DataFrame to view the results in the console
+print(results_df)
 
 # Results Comparison
 results = {
@@ -91,6 +97,21 @@ results = {
 results_df = pd.DataFrame(results)
 print("\nModel Comparison:")
 print(results_df)
+
+# Function to plot confusion matrix
+def plot_confusion_matrix(conf_matrix, model_name):
+    plt.figure(figsize=(6, 6))
+    sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=["No", "Yes"], yticklabels=["No", "Yes"])
+    plt.title(f'Confusion Matrix for {model_name}')
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.show()
+
+# Generate confusion matrix for each model
+plot_confusion_matrix(conf_matrix_knn, 'k-NN')
+plot_confusion_matrix(conf_matrix_nb, 'Naive Bayes')
+plot_confusion_matrix(conf_matrix_dt, 'Decision Tree')
+plot_confusion_matrix(conf_matrix_lr, 'Logistic Regression')
 
 # Plot ROC curves for each classifier
 def plot_roc(fpr, tpr, label):
