@@ -7,9 +7,9 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 
 def preprocess_data(df):
-    categorical_features = ['Complains', 'Plan', 'Age Group']
+    categorical_features = ['Complains', 'Plan', 'Age Group','Churn']
     numerical_features = ['Call Failure', 'Charge Amount', 'Freq. of use', 'Freq. of SMS', 'Distinct Called Numbers',
-                          'Age']
+                          'Age','ID']
 
     preprocessor = ColumnTransformer(
         transformers=[
