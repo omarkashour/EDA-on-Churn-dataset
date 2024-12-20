@@ -1,13 +1,8 @@
-import pandas as pd
 from data_preprocessing import load_data, summary_statistics, plot_distribution, plot_churn_by_age_group, plot_churn_by_charge_amount, charge_amount_statistics, plot_correlation_matrix
 from model_training import preprocess_data, train_model, evaluate_model, plot_predictions_vs_actual
-import numpy as np
-from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
 # Load the dataset
 url = './Customer Churn.csv'
 df = load_data(url)
