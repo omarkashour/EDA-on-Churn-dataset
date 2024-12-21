@@ -21,7 +21,7 @@ y = data['Churn'].map({'yes': 1, 'no': 0})  # Target variable (convert 'yes'/'no
 X = pd.get_dummies(X, drop_first=True)
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Standardize the data (important for k-NN)
 scaler = StandardScaler()
@@ -85,8 +85,7 @@ plt.title('Model Performance Comparison')
 plt.yticks(rotation=0)  # Rotate row labels to make them horizontal
 plt.show()
 
-# Optionally, you can print the raw DataFrame to view the results in the console
-print(results_df)
+
 
 # Results Comparison
 results = {
