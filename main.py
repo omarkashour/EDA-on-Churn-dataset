@@ -15,6 +15,8 @@ plot_churn_by_charge_amount(df)
 charge_amount_statistics(df)
 plot_correlation_matrix(df)
 
+
+df = df.drop('ID', axis=1)
 # Prepare data for model training
 preprocessor = preprocess_data(df)
 
@@ -25,7 +27,11 @@ y = df['Customer Value']
 X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3, random_state=42)
 model = train_model(X_train, y_train, preprocessor)
 y_pred = model.predict(X_test)
-evaluate_model(y_test, y_pred)
+n = len(y_test)  # Number of observations
+p = X2.shape[1]  # Number of predictors (features)
+
+# Evaluate the model
+evaluate_model(y_test, y_pred, n, p)
 plot_predictions_vs_actual(y_test, y_pred)
 
 # Model 2
@@ -36,7 +42,11 @@ X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3, random
 model2 = LinearRegression()
 model2.fit(X_train, y_train)
 y_pred = model2.predict(X_test)
-evaluate_model(y_test, y_pred)
+n = len(y_test)  # Number of observations
+p = X2.shape[1]  # Number of predictors (features)
+
+# Evaluate the model
+evaluate_model(y_test, y_pred, n, p)
 plot_predictions_vs_actual(y_test, y_pred)
 
 # Model 3
@@ -48,4 +58,9 @@ model3 = LinearRegression()
 model3.fit(X_train, y_train)
 y_pred = model3.predict(X_test)
 evaluate_model(y_test, y_pred)
+n = len(y_test)  # Number of observations
+p = X2.shape[1]  # Number of predictors (features)
+
+# Evaluate the model
+evaluate_model(y_test, y_pred, n, p)
 plot_predictions_vs_actual(y_test, y_pred)

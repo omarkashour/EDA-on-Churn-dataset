@@ -11,8 +11,6 @@ def load_data(file_path):
 
 
 def preprocess_data(df):
-    # Check for missing values
-    print(df.isnull().sum())
 
     # Convert to numeric where applicable
     numeric_columns = ['Age', 'Call Failure', 'Complains', 'Freq. of use', 'Freq. of SMS', 'Distinct Called Numbers',
