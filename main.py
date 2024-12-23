@@ -57,7 +57,6 @@ X_train, X_test, y_train, y_test = train_test_split(X2, y, test_size=0.3, random
 model3 = LinearRegression()
 model3.fit(X_train, y_train)
 y_pred = model3.predict(X_test)
-evaluate_model(y_test, y_pred)
 n = len(y_test)  # Number of observations
 p = X2.shape[1]  # Number of predictors (features)
 
